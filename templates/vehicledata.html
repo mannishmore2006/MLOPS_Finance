@@ -52,9 +52,15 @@
             <button type="submit" class="train-button">Train Model</button>
         </form>
 
-        {% if context %}
+        <!-- {% if context %}
             <div class="result">
                 <h2>Result: {{ context }}</h2>
+            </div>
+        {% endif %} -->
+        {% if context %}
+            <div class="result">
+                <h2>Prediction Result</h2>
+                <p>{{ context }}</p>
             </div>
         {% endif %}
     </div>
