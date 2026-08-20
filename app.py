@@ -121,6 +121,19 @@ async def index(request: Request):
 
 
 # ============================================================
+# Health Check
+# ============================================================
+
+@app.get("/health")
+async def health():
+
+    return {
+        "status": "healthy",
+        "message": "Vehicle Insurance Prediction API is running"
+    }
+
+
+# ============================================================
 # Training Route
 # ============================================================
 
