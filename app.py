@@ -60,6 +60,21 @@ app.add_middleware(
 
 
 # ============================================================
+# Health Check
+# ============================================================
+
+@app.get("/health")
+async def health_check():
+
+    logging.info("Health check called")
+
+    return {
+        "status": "healthy",
+        "message": "Vehicle Insurance Prediction API is running"
+    }
+
+
+# ============================================================
 # Data Form
 # ============================================================
 
@@ -112,25 +127,12 @@ async def index(request: Request):
     logging.info("Opening Vehicle Insurance Prediction page")
 
     return templates.TemplateResponse(
-        "vehicledata.html",
-        {
-            "request": request,
+        request=request,
+        name="vehicledata.html",
+        context={
             "context": None
         }
     )
-
-
-# ============================================================
-# Health Check
-# ============================================================
-
-@app.get("/health")
-async def health():
-
-    return {
-        "status": "healthy",
-        "message": "Vehicle Insurance Prediction API is running"
-    }
 
 
 # ============================================================
@@ -245,7 +247,6 @@ async def predictRouteClient(request: Request):
             dataframe=vehicle_df
         )
 
-
         logging.info(
             f"Raw prediction received: {prediction}"
         )
@@ -256,7 +257,6 @@ async def predictRouteClient(request: Request):
         # ----------------------------------------------------
 
         value = int(prediction[0])
-
 
         logging.info(
             f"Prediction value: {value}"
@@ -286,11 +286,9 @@ async def predictRouteClient(request: Request):
         # ----------------------------------------------------
 
         return templates.TemplateResponse(
-
-            "vehicledata.html",
-
-            {
-                "request": request,
+            request=request,
+            name="vehicledata.html",
+            context={
                 "context": status
             }
         )
@@ -308,11 +306,9 @@ async def predictRouteClient(request: Request):
         # ----------------------------------------------------
 
         return templates.TemplateResponse(
-
-            "vehicledata.html",
-
-            {
-                "request": request,
+            request=request,
+            name="vehicledata.html",
+            context={
                 "context": f"Error: {str(e)}"
             }
         )
